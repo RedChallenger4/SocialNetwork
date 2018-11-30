@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "794932216005",
+    "firebase_url": "https://poster-abd69.firebaseio.com",
+    "project_id": "poster-abd69",
+    "storage_bucket": "poster-abd69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794932216005:android:97b5c517a07b936d",
+        "android_client_info": {
+          "package_name": "demo.appium.com.socialnetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794932216005-0tfqe3e4a5km7b1ltvmhsdbs6gbkif3v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "demo.appium.com.socialnetwork",
+            "certificate_hash": "f6950c99f712698f124411fbb9b60b29c255ffd7"
+          }
+        },
+        {
+          "client_id": "794932216005-nvgth0ks6i7i9hjh6g4rv4dfblcmp7o5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh2Yd88r8YVtAd4YxzRmT9LzwJaGs_XrA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794932216005-nvgth0ks6i7i9hjh6g4rv4dfblcmp7o5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
