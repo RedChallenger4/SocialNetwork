@@ -43,5 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    // added a dependency from hdodenoff for image view
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 //apply plugin: 'com.google.gms.google-services'
