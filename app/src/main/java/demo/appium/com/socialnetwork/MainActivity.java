@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // creates a new instance for user
         mAuth = FirebaseAuth.getInstance();
 
         // added toolbar to main activity
@@ -64,8 +65,15 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-        // current user of the app
+        // so it won't crash, Firebase instance is declared again for checks
+        if(mAuth == null) {
+            mAuth = FirebaseAuth.getInstance();
+        }
+
+        // checks if there is an active user instance
+        // if not, null means user is not connected to Firebase
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         // check if token exists
         if(currentUser == null)
         {
@@ -128,7 +136,8 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_Logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                mAuth.signOut(); // signs out user from firebase
+                SendUserToLoginActivity(); // sends user back to LoginActivity
                 break;
 
             default:
