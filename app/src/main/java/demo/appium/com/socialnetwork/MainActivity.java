@@ -9,12 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar mToolbar;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference UsersRef; // users reference
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
         // creates a new instance for user
         mAuth = FirebaseAuth.getInstance();
+        // node where users information is stored
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         // added toolbar to main activity
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -74,12 +83,50 @@ public class MainActivity extends AppCompatActivity
         // if not, null means user is not connected to Firebase
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        // check if token exists
-        if(currentUser == null)
-        {
+        // check if token/user exists
+        if(currentUser == null) {
             // sends user to Login Screen right away
             SendUserToLoginActivity();
+        } else {
+            CheckUserExistence();
         }
+    }
+
+    // WARNING: MOST IMPORTANT b/c of user authentication
+    private void CheckUserExistence() {
+        // gets user id
+        final String current_user_id = mAuth.getCurrentUser().getUid();
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // if user id doesn't exist in Firebase but is authenticated
+                //  it needs to have record in Firebase Database
+                if (!dataSnapshot.hasChild(current_user_id)) {
+
+                    SendUserToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void SendUserToSetupActivity() {
+        // directs where User will go from start to finish
+        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+
+        // not allow the user to return to Main Activity
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(setupIntent);
+
+        // closes Main Activity so you cannot go back
+        finish();
     }
 
     private void SendUserToLoginActivity() {
